@@ -2,23 +2,188 @@
 
 @import "tailwindcss";
 
-*{
+/* ---------- GLOBAL FONT ---------- */
+* {
   font-family: "Outfit", sans-serif;
 }
+
+/* ---------- PREMIUM COLOR TOKENS ---------- */
 @theme {
-    --color-primary: #E6CCFF;
+  /* soft emerald primary (used already in app) */
+  --color-primary: #34d399;
+
+  /* premium background + accents */
+  --bg-main: #04150B;
+  --card-bg: rgba(16, 185, 129, 0.08);
+  --border-soft: rgba(16, 185, 129, 0.25);
+  --accent-glow: rgba(52, 211, 153, 0.6);
 }
+
+/* ---------- SCROLL ---------- */
 ::-webkit-scrollbar {
   display: none;
 }
 
-.reset-tw :not(pre):not(code){
+/* ---------- MARKDOWN RESET ---------- */
+.reset-tw :not(pre):not(code) {
   all: revert;
 }
 
-.loader div:nth-child(2){
+/* ---------- LOADER ANIMATION ---------- */
+.loader div:nth-child(2) {
   animation-delay: 0.2s;
 }
-.loader div:nth-child(3){
+.loader div:nth-child(3) {
   animation-delay: 0.4s;
+}
+
+/* ---------- PREMIUM POLISH (NO JSX CHANGE) ---------- */
+
+/* subtle glow on cards & inputs */
+.border {
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.08);
+}
+
+/* buttons & interactive elements */
+button {
+  transition: all 0.25s ease;
+}
+button:hover {
+  box-shadow: 0 0 18px var(--accent-glow);
+}
+
+/* chat bubbles feel richer */
+.reset-tw pre {
+  background: rgba(4, 21, 11, 0.85);
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+}
+
+/* code text color */
+.reset-tw code {
+  color: #6ee7b7;
+}
+/* ================= PREMIUM GREEN THEME ================= */
+
+:root {
+  --bg-main: #020b06;
+  --bg-card: #04150b;
+  --border-glass: rgba(16,185,129,.25);
+  --accent: #34d399;
+  --accent-soft: #6ee7b7;
+  --text-main: #d1fae5;
+  --text-muted: #9ca3af;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  letter-spacing: .3px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Glass look for cards / messages */
+.glass {
+  background: rgba(4,21,11,0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-glass);
+  box-shadow: 0 10px 30px rgba(16,185,129,.15);
+  border-radius: 14px;
+}
+
+/* Hover premium feel */
+button, .card {
+  transition: all .25s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 30px rgba(16,185,129,.35);
+}
+
+/* Input focus polish */
+input:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(16,185,129,.25);
+}
+
+/* Premium scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #020b06;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg,#34d399,#10b981);
+  border-radius: 10px;
+}
+
+/* ===== Premium Chat Input Box ===== */
+
+form {
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow:
+    0 8px 30px rgba(16, 185, 129, 0.25),
+    inset 0 0 0 1px rgba(52, 211, 153, 0.25);
+  transition: all 0.3s ease;
+}
+
+form:focus-within {
+  box-shadow:
+    0 12px 40px rgba(16, 185, 129, 0.45),
+    inset 0 0 0 1px rgba(110, 231, 183, 0.6);
+}
+
+/* input text smooth */
+form input {
+  background: transparent;
+  color: #d1fae5;
+  letter-spacing: 0.3px;
+}
+
+form input::placeholder {
+  color: #6ee7b7;
+  opacity: 0.8;
+}
+
+/* send button polish */
+form button img {
+  filter: drop-shadow(0 0 6px rgba(52, 211, 153, 0.6));
+  transition: transform 0.2s ease;
+}
+
+form button:hover img {
+  transform: scale(1.1);
+}
+
+/* ===== Fix inner input box look ===== */
+
+form input {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  padding: 0.6rem 0.8rem;
+  border-radius: 9999px;
+}
+
+/* remove select box feel */
+form select {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* ensure full pill continuity */
+form {
+  gap: 0.75rem;
+}
+
+form input::placeholder {
+  color: #86efac;
+  font-weight: 400;
 }
