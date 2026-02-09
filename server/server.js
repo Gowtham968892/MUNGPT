@@ -1,32 +1,30 @@
 import dotenv from 'dotenv';
-import express from 'express'
-import cors from 'cors'
-import connectDB from './configs/db.js'
-import userRouter from './routes/userRoutes.js'
-import chatRouter from './routes/chatRoutes.js'
-import messageRouter from './routes/messageRoutes.js'
+dotenv.config();
+
+import express from 'express';
+import cors from 'cors';
+import connectDB from './configs/db.js';
+import userRouter from './routes/userRoutes.js';
+import chatRouter from './routes/chatRoutes.js';
+import messageRouter from './routes/messageRoutes.js';
 import creditRouter from './routes/creditRoutes.js';
+import { stripeWebhooks } from './controllers/webhooks.js';
 
-const app = express()
+const app = express();
 
-await connectDB()
+await connectDB();
 
-app.post('/api/stripe', express.raw({type: 'application/json'}), stripeWebhooks)
+app.post('/api/stripe', express.raw({ type: 'application/json' }), stripeWebhooks);
 
+app.use(cors());
+app.use(express.json());
 
+app.get('/', (req, res) => res.send('Server is Live!'));
 
-app.use(cors())
-app.use(express.json())
+app.use('/api/user', userRouter);
+app.use('/api/chat', chatRouter);
+app.use('/api/message', messageRouter);
+app.use('/api/credit', creditRouter);
 
-
-app.get('/', (req, res)=> res.send('Server is Live!'))
-app.use('/api/user', userRouter)
-app.use('/api/chat', chatRouter)
-app.use('/api/message', messageRouter)
-app.use('/api/credit', creditRouter)
-
-const PORT = process.env.PORT || 3000
-
-app.listen(PORT, ()=>{
-    console.log(`Server is running on port ${PORT}`)
-})
+// 🔥 ONLY CHANGE
+export default app;

@@ -1,4 +1,4 @@
-import Stripe from "Stripe";
+import Stripe from "stripe";
 import Transaction from "../models/Transaction.js";
 import user from "../models/User.js";
 
