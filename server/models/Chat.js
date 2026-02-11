@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-
 const ChatSchema = new mongoose.Schema({
     userId : {type: String, ref: 'user', required: true},
     userName : {type: String, required: true},
@@ -14,7 +13,7 @@ const ChatSchema = new mongoose.Schema({
             timestamp: { type: Number, required: true },
         }
     ]
-}, {timestamp: true})
+}, { timestamps: true })   // ✅ FIX
 
 const Chat = mongoose.model('Chat', ChatSchema)
 

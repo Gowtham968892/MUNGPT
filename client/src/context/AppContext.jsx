@@ -47,14 +47,14 @@ export const AppContextProvider = ({ children }) => {
                 { headers: { Authorization: `Bearer ${token}` } }  // ✅ FIXED
             )
 
-            await fetchUserchats()
+            await fetchUserChats()
 
         } catch (error) {
             toast.error(error.message)
         }
     }
 
-    const fetchUserchats = async () => {
+    const fetchUserChats = async () => {
         try {
             const { data } = await axios.get(
                 '/api/chat/get',
@@ -66,7 +66,7 @@ export const AppContextProvider = ({ children }) => {
 
                 if (data.chats.length === 0) {   // ✅ FIXED
                     await createNewChat();
-                    return fetchUserchats()
+                    return fetchUserChats()
                 } else {
                     setSelectedChat(data.chats[0])
                 }
@@ -91,7 +91,7 @@ export const AppContextProvider = ({ children }) => {
 
     useEffect(() => {
         if (user) {
-            fetchUserchats()
+            fetchUserChats()
         } else {
             setChats([])
             setSelectedChat(null)
@@ -120,7 +120,7 @@ export const AppContextProvider = ({ children }) => {
         setTheme,
         createNewChat,
         loadingUser,
-        fetchUserchats,
+        fetchUserChats,
         token,
         setToken,
         axios
