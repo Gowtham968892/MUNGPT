@@ -40,13 +40,13 @@ const ChatBox = () => {
       {/* Messages */}
       <div ref={containerRef} className="flex-1 mb-5 overflow-y-scroll">
         {messages.length === 0 && (
-          <div className="h-full flex flex-col items-center justify-center gap-2 text-emerald-400">
+          <div className="h-full flex flex-col items-center justify-center gap-2 text-purple-400">
             <img
               src={theme === 'dark' ? assets.dark_mode : assets.light_mode}
               alt=""
               className="w-full max-w-56 sm:max-w-68 opacity-90"
             />
-            <p className="mt-5 text-4xl sm:text-6xl text-center text-emerald-200">
+            <p className="mt-5 text-4xl sm:text-6xl text-center text-purple-200">
               Ask me anything.
             </p>
           </div>
@@ -58,20 +58,20 @@ const ChatBox = () => {
 
         {loading && (
           <div className="loader flex items-center gap-1.5 mt-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-bounce"></div>
-            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-bounce"></div>
-            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-bounce"></div>
+            <div className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-bounce"></div>
+            <div className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-bounce"></div>
+            <div className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-bounce"></div>
           </div>
         )}
       </div>
 
       {/* Image publish */}
       {mode === 'image' && (
-        <label className="inline-flex items-center gap-2 mb-3 text-xs mx-auto text-emerald-300">
+        <label className="inline-flex items-center gap-2 mb-3 text-xs mx-auto text-purple-300">
           <p>Publish Generated Images to Community</p>
           <input
             type="checkbox"
-            className="cursor-pointer accent-emerald-500"
+            className="cursor-pointer accent-purple-500"
             checked={isPublished}
             onChange={(e) => setIsPublished(e.target.checked)}
           />
@@ -82,11 +82,11 @@ const ChatBox = () => {
       <form
         onSubmit={onSubmit}
         className="
-        bg-emerald-500/10
+        bg-purple-500/10
         backdrop-blur-xl
-        border border-emerald-400/30
+        border border-purple-400/30
         rounded-full
-        shadow-[0_0_30px_rgba(16,185,129,0.25)]
+        shadow-[0_0_30px_rgba(168,85,247,0.25)]
         w-full max-w-2xl
         p-3 pl-5
         mx-auto flex gap-4 items-center
@@ -96,10 +96,10 @@ const ChatBox = () => {
         <select
           onChange={(e) => setMode(e.target.value)}
           value={mode}
-          className="text-sm pl-3 pr-2 outline-none bg-transparent text-emerald-200"
+          className="text-sm pl-3 pr-2 outline-none bg-transparent text-purple-200"
         >
-          <option className="bg-emerald-900" value="text">Text</option>
-          <option className="bg-emerald-900" value="image">Image</option>
+          <option className="bg-purple-900" value="text">Text</option>
+          <option className="bg-purple-900" value="image">Image</option>
         </select>
 
         <input
@@ -109,7 +109,7 @@ const ChatBox = () => {
           placeholder="Type your prompt here..."
           className="
           flex-1 w-full text-sm outline-none bg-transparent
-          text-emerald-50 placeholder:text-emerald-300/60
+          text-purple-50 placeholder:text-purple-300/60
           "
           required
         />
@@ -117,9 +117,9 @@ const ChatBox = () => {
         <button
           disabled={loading}
           className="
-          bg-emerald-500 hover:bg-emerald-600
+          bg-purple-500 hover:bg-purple-600
           p-2 rounded-full
-          shadow-[0_0_15px_rgba(16,185,129,0.6)]
+          shadow-[0_0_15px_rgba(168,85,247,0.6)]
           transition-all
           "
         >

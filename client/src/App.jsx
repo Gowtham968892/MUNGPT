@@ -7,17 +7,22 @@ import Community from './pages/Community'
 import Loading from './pages/Loading'
 import { assets } from './assets/assets'
 import './assets/prism.css'
-import { useAppContext } from './context/AppContext'
+import { useAppContext } from './context/AppContext.jsx'
 import Login from './pages/Login'
+import { Toaster } from 'react-hot-toast'
 
 const App = () => {
 
-  const { user } = useAppContext()
+  const { user, loadingUser } = useAppContext()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { pathname } = useLocation()
 
+  if (pathname === '/loading' || loadingUser) return <Loading />
+
   return (
     <>
+      <Toaster />
+
       {!isMenuOpen && (
         <img
           src={assets.menu_icon}
@@ -27,8 +32,11 @@ const App = () => {
       )}
 
       {user ? (
-        <div className="min-h-screen w-screen bg-gradient-to-b from-green-900 via-green-950 to-black text-green-50">
-          <div className="flex h-screen w-screen">
+        <div className="min-h-screen w-screen 
+        bg-gradient-to-br from-black via-purple-950 to-black 
+        text-white">
+          
+          <div className="flex h-screen w-screen backdrop-blur-sm">
             <Sidebar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
             <Routes>
               <Route path="/" element={<ChatBox />} />
@@ -37,9 +45,11 @@ const App = () => {
               <Route path="/community" element={<Community />} />
             </Routes>
           </div>
+
         </div>
       ) : (
-        <div className="h-screen w-screen flex items-center justify-center bg-gradient-to-b from-green-900 via-green-950 to-black">
+        <div className="h-screen w-screen flex items-center justify-center 
+        bg-gradient-to-br from-black via-purple-950 to-black">
           <Login />
         </div>
       )}

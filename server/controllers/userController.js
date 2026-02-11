@@ -5,83 +5,129 @@ import Chat from "../models/Chat.js";
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: '30d'
-  })
-}
-
+    expiresIn: "30d",
+  });
+};
 
 export const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
-    const userExists = await User.findOne({ email });
+    const normalizedEmail = email.toLowerCase();
+
+    const userExists = await User.findOne({ email: normalizedEmail });
 
     if (userExists) {
-      return res.json({ success: false, message: "User already exists" });
+      return res.status(400).json({
+        success: false,
+        message: "User already exists",
+      });
     }
 
-    const user = await User.create({ name, email, password });
+    const user = await User.create({
+      name,
+      email: normalizedEmail,
+      password,
+    });
 
     const token = generateToken(user._id);
 
-    return res.json({ success: true, token }); // 🔥 fixed jspn → json
+    return res.status(201).json({
+      success: true,
+      token,
+    });
   } catch (error) {
-    return res.json({ success: false, message: error.message });
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 };
-
 
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const userExists = await User.findOne({ email });
+    const normalizedEmail = email.toLowerCase();
 
-    if (userExists) {
-      const isMatch = await bcrypt.compare(password, userExists.password);
+    const userExists = await User.findOne({ email: normalizedEmail });
 
-      if (isMatch) {
-        const token = generateToken(userExists._id);
-        return res.json({ success: true, token });
-      }
+    if (!userExists) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid email or password",
+      });
     }
 
-    return res.json({ success: false, message: "Invalid email or password" });
+    const isMatch = await bcrypt.compare(
+      password,
+      userExists.password
+    );
+
+    if (!isMatch) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid email or password",
+      });
+    }
+
+    const token = generateToken(userExists._id);
+
+    return res.status(200).json({
+      success: true,
+      token,
+    });
   } catch (error) {
-    return res.json({ success: false, message: error.message });
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 };
 
 export const getUser = async (req, res) => {
   try {
     const user = req.user;
-    return res.json({ success: true, user });
+
+    return res.status(200).json({
+      success: true,
+      user,
+    });
   } catch (error) {
-    return res.json({ success: false, message: error.message });
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 };
 
 export const getPublishedImages = async (req, res) => {
   try {
     const publishedImageMessages = await Chat.aggregate([
-        {$unwind: "$messages"},
-        {
-          $match: {
-            "messages.isImage": true,
-            "messages.isPublished": true
-          }
+      { $unwind: "$messages" },
+      {
+        $match: {
+          "messages.isImage": true,
+          "messages.isPublished": true,
         },
-        {
-          $project: {
-            _id: 0,
-            imageUrl: "$messages.content",
-            userName: "$userName"
-          }
-        }
-    ])
+      },
+      {
+        $project: {
+          _id: 0,
+          imageUrl: "$messages.content",
+          userName: "$userName",
+        },
+      },
+    ]);
 
-    res.json({ success: true, images: publishedImageMessages.reverse()})
+    return res.status(200).json({
+      success: true,
+      images: publishedImageMessages.reverse(),
+    });
   } catch (error) {
-    return res.json({ success: false, message: error.message });
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
-}
+};

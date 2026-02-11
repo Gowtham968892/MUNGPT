@@ -19,38 +19,43 @@ const Credits = () => {
   if(loading) return <Loading/>
 
   return (
-    <div className="max-w-7xl h-screen overflow-y-scroll mx-auto px-4 sm:px-6
-    lg:px-8 py-12">
-      <h2 className="text-3xl font-semibold text-center mb-10 xl:mt-30
-      text-green-200">Credit Plans</h2>
+    <div className="max-w-7xl h-screen overflow-y-scroll mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      
+      <h2 className="text-3xl font-semibold text-center mb-10 xl:mt-30 text-purple-200">
+        Premium Credit Plans
+      </h2>
 
       <div className='flex flex-wrap justify-center gap-8'>
         {plans.map((plan)=>(   
-          <div key={plan._id} className={`
-            border border-green-500/30
-            rounded-xl
-            backdrop-blur-xl
-            shadow-lg shadow-green-500/20
-            hover:shadow-green-500/40
-            transition-all
-            p-6 min-w-[300px] flex flex-col
-            ${plan._id === "pro"
-              ? "bg-gradient-to-b from-green-900/50 to-green-950/70 scale-105 ring-2 ring-green-400/40"
-              : "bg-gradient-to-b from-green-900/30 to-green-950/50"}
-          `}>
+          <div 
+            key={plan._id} 
+            className={`
+              border border-purple-400/20
+              rounded-2xl
+              backdrop-blur-2xl
+              shadow-xl
+              transition-all
+              p-6 min-w-[300px] flex flex-col
+              hover:scale-105
+              hover:shadow-purple-500/30
+              ${plan._id === "pro"
+                ? "bg-gradient-to-b from-purple-900/60 via-fuchsia-900/50 to-black ring-2 ring-purple-400/40"
+                : "bg-gradient-to-b from-purple-900/40 to-black/80"}
+            `}
+          >
               <div className='flex-1'>
-                <h3 className='text-xl font-semibold text-green-50 mb-2'>
+                <h3 className='text-xl font-semibold text-white mb-2'>
                   {plan.name}
                 </h3>
 
-                <p className="text-green-200">
+                <p className="text-purple-200 text-lg font-semibold">
                   ${plan.price}
-                  <span className='text-base font-normal text-green-300'>
+                  <span className='text-base font-normal text-purple-300'>
                     {' '} / {plan.credits} credits
                   </span>
                 </p>
 
-                <ul className="list-disc list-inside text-sm text-green-200 space-y-1 mt-2">
+                <ul className="list-disc list-inside text-sm text-purple-200 space-y-1 mt-3">
                   {plan.features.map((feature, index)=>(
                     <li key={index}>{feature}</li>
                   ))}
@@ -59,14 +64,14 @@ const Credits = () => {
 
               <button className="
                 mt-6
-                bg-gradient-to-r from-green-500 to-emerald-600
-                hover:from-green-400 hover:to-emerald-500
+                bg-gradient-to-r from-purple-600 to-pink-600
+                hover:from-purple-500 hover:to-pink-500
                 active:scale-95
-                text-white font-medium py-2 rounded-lg
-                shadow-lg shadow-green-500/30
+                text-white font-medium py-2 rounded-xl
+                shadow-lg shadow-purple-500/40
                 transition-all cursor-pointer
               ">
-                Buy Now
+                Upgrade Now
               </button>
           </div>
         ))}

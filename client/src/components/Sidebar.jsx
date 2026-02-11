@@ -10,8 +10,8 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
   return (
     <div
       className={`flex flex-col h-screen min-w-72 p-5
-      bg-gradient-to-b from-emerald-900/40 via-emerald-950/40 to-black/50
-      border-r border-emerald-400/20 backdrop-blur-3xl
+      bg-gradient-to-b from-purple-900/40 via-purple-950/40 to-black/50
+      border-r border-purple-400/20 backdrop-blur-3xl
       transition-all duration-500 max-md:absolute left-0 z-10
       ${!isMenuOpen && 'max-md:-translate-x-full'}`}
     >
@@ -27,9 +27,9 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
         className="
         flex justify-center items-center w-full py-2 mt-10
         text-white text-sm rounded-xl
-        bg-gradient-to-r from-emerald-500 to-emerald-700
-        shadow-[0_0_18px_rgba(16,185,129,0.45)]
-        hover:shadow-[0_0_28px_rgba(16,185,129,0.7)]
+        bg-gradient-to-r from-purple-500 to-violet-700
+        shadow-[0_0_18px_rgba(168,85,247,0.45)]
+        hover:shadow-[0_0_28px_rgba(168,85,247,0.7)]
         transition-all
         "
       >
@@ -40,8 +40,8 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
       <div
         className="
         flex items-center gap-2 p-3 mt-4
-        border border-emerald-400/25 rounded-xl
-        bg-emerald-900/20
+        border border-purple-400/25 rounded-xl
+        bg-purple-900/20
         "
       >
         <img src={assets.search_icon} className="w-4 invert opacity-80" alt="" />
@@ -52,13 +52,13 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
           placeholder="Search Conversations"
           className="
           text-xs bg-transparent outline-none w-full
-          placeholder:text-emerald-300/60 text-emerald-50
+          placeholder:text-purple-300/60 text-purple-50
           "
         />
       </div>
 
       {chats.length > 0 && (
-        <p className="mt-4 text-sm text-emerald-200/80">Recent Chats</p>
+        <p className="mt-4 text-sm text-purple-200/80">Recent Chats</p>
       )}
 
       {/* Chat list */}
@@ -79,20 +79,20 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
               }}
               className="
               p-2 px-4 rounded-xl cursor-pointer flex justify-between group
-              bg-emerald-900/15
-              border border-emerald-400/15
-              hover:bg-emerald-800/30
-              hover:border-emerald-400/30
+              bg-purple-900/15
+              border border-purple-400/15
+              hover:bg-purple-800/30
+              hover:border-purple-400/30
               transition-all
               "
             >
               <div>
-                <p className="truncate w-full text-emerald-50">
+                <p className="truncate w-full text-purple-50">
                   {chat.messages.length > 0
                     ? chat.messages[0]?.content.slice(0, 32)
                     : chat.name}
                 </p>
-                <p className="text-xs text-emerald-300/70">
+                <p className="text-xs text-purple-300/70">
                   {moment(chat.updatedAt).fromNow()}
                 </p>
               </div>
@@ -114,14 +114,14 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
         }}
         className="
         flex items-center gap-2 p-3 mt-4 rounded-xl cursor-pointer
-        border border-emerald-400/20
-        hover:bg-emerald-800/25
+        border border-purple-400/20
+        hover:bg-purple-800/25
         hover:scale-[1.03]
         transition-all
         "
       >
         <img src={assets.gallery_icon} className="w-4.5 invert opacity-80" alt="" />
-        <p className="text-sm text-emerald-50">Community Images</p>
+        <p className="text-sm text-purple-50">Community Images</p>
       </div>
 
       {/* Credits */}
@@ -132,16 +132,16 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
         }}
         className="
         flex items-center gap-2 p-3 mt-4 rounded-xl cursor-pointer
-        border border-emerald-400/20
-        hover:bg-emerald-800/25
+        border border-purple-400/20
+        hover:bg-purple-800/25
         hover:scale-[1.03]
         transition-all
         "
       >
         <img src={assets.diamond_icon} className="w-4.5 invert opacity-80" alt="" />
         <div className="flex flex-col text-sm">
-          <p className="text-emerald-50">Credits : {user?.credits}</p>
-          <p className="text-xs text-emerald-300/70">
+          <p className="text-purple-50">Credits : {user?.credits}</p>
+          <p className="text-xs text-purple-300/70">
             Purchase credits to use MunGPT
           </p>
         </div>
@@ -151,10 +151,10 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
       <div
         className="
         flex items-center justify-between gap-2 p-3 mt-4 rounded-xl
-        border border-emerald-400/20
+        border border-purple-400/20
         "
       >
-        <div className="flex items-center gap-2 text-sm text-emerald-50">
+        <div className="flex items-center gap-2 text-sm text-purple-50">
           <img src={assets.theme_icon} className="w-4 invert opacity-80" alt="" />
           <p>Dark Mode</p>
         </div>
@@ -166,7 +166,7 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
             className="sr-only peer"
             checked={theme === 'dark'}
           />
-          <div className="w-9 h-5 bg-gray-500 rounded-full peer-checked:bg-emerald-600 transition-all"></div>
+          <div className="w-9 h-5 bg-gray-600 rounded-full peer-checked:bg-purple-600 transition-all"></div>
           <span className="absolute left-1 top-1 w-3 h-3 bg-white rounded-full transition-transform peer-checked:translate-x-4"></span>
         </label>
       </div>
@@ -175,17 +175,17 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
       <div
         className="
         flex items-center gap-2 p-3 mt-4 rounded-xl cursor-pointer group
-        border border-emerald-400/20
-        hover:bg-emerald-800/25
+        border border-purple-400/20
+        hover:bg-purple-800/25
         transition-all
         "
       >
         <img
           src={assets.user_icon}
-          className="w-7 h-7 rounded-full ring-2 ring-emerald-400/40"
+          className="w-7 h-7 rounded-full ring-2 ring-purple-400/40"
           alt=""
         />
-        <p className="flex-1 text-sm text-emerald-50 truncate">
+        <p className="flex-1 text-sm text-purple-50 truncate">
           {user ? user.name : 'Login your account'}
         </p>
         {user && (
