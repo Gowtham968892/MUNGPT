@@ -26,17 +26,23 @@ const App = () => {
       {!isMenuOpen && (
         <img
           src={assets.menu_icon}
-          className="absolute top-3 left-3 w-8 h-8 cursor-pointer md:hidden invert"
+          className="absolute top-3 left-3 w-8 h-8 cursor-pointer md:hidden invert z-50"
           onClick={() => setIsMenuOpen(true)}
+          alt="menu"
         />
       )}
 
       {user ? (
-        <div className="min-h-screen w-screen 
-        bg-gradient-to-br from-black via-purple-950 to-black 
-        text-white">
-          
-          <div className="flex h-screen w-screen backdrop-blur-sm">
+        <div className="relative min-h-screen w-screen text-white overflow-hidden 
+        bg-[radial-gradient(circle_at_50%_35%,rgba(59,130,246,0.18),transparent_40%),radial-gradient(circle_at_80%_90%,rgba(139,92,246,0.15),transparent_40%),linear-gradient(to_bottom_right,#000000,#0a0f1f,#000000)]">
+
+          {/* Subtle Animated Glow Layer */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/5 via-transparent to-purple-500/5 animate-pulse pointer-events-none"></div>
+
+          {/* Soft Blur Overlay for Premium Feel */}
+          <div className="absolute inset-0 backdrop-blur-[2px] pointer-events-none"></div>
+
+          <div className="flex h-screen w-screen relative z-10">
             <Sidebar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
             <Routes>
               <Route path="/" element={<ChatBox />} />
@@ -48,8 +54,12 @@ const App = () => {
 
         </div>
       ) : (
-        <div className="h-screen w-screen flex items-center justify-center 
-        bg-gradient-to-br from-black via-purple-950 to-black">
+        <div className="relative h-screen w-screen flex items-center justify-center text-white overflow-hidden
+        bg-[radial-gradient(circle_at_50%_35%,rgba(59,130,246,0.18),transparent_40%),radial-gradient(circle_at_80%_90%,rgba(139,92,246,0.15),transparent_40%),linear-gradient(to_bottom_right,#000000,#0a0f1f,#000000)]">
+
+          {/* Glow Layer */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/5 via-transparent to-purple-500/5 animate-pulse pointer-events-none"></div>
+
           <Login />
         </div>
       )}

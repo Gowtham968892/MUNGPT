@@ -32,60 +32,83 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
 
   return (
     <div
-      className={`flex flex-col h-screen min-w-72 p-5
-      bg-gradient-to-b from-purple-900/40 via-purple-950/40 to-black/50
-      border-r border-purple-400/20 backdrop-blur-3xl
-      transition-all duration-500 max-md:absolute left-0 z-10
+      className={`relative flex flex-col h-screen min-w-72 p-6
+      bg-white/[0.04]
+      backdrop-blur-3xl
+      border-r border-white/10
+      shadow-[0_8px_40px_rgba(0,0,0,0.6)]
+      before:absolute before:inset-0
+      before:bg-gradient-to-b before:from-cyan-500/5 before:via-transparent before:to-purple-500/5
+      before:pointer-events-none
+      transition-all duration-500 max-md:absolute left-0 z-20
+      text-[15px] leading-6 tracking-wide
       ${!isMenuOpen && 'max-md:-translate-x-full'}`}
     >
-      {/* Logo */}
-      <img
-        src={theme === 'dark' ? assets.dark_mode : assets.light_mode}
-        alt="MunGPT"
-        className="w-full max-w-48 opacity-90"
-      />
+
+      {/* Edge Glow */}
+      <div className="absolute top-0 right-0 h-full w-[1px] bg-gradient-to-b from-cyan-400/40 via-transparent to-purple-500/40"></div>
+
+      {/* LOGO */}
+      <div className="flex items-center gap-3 mb-4 relative z-10">
+        <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-400
+                        flex items-center justify-center
+                        shadow-[0_0_25px_rgba(0,240,255,0.6)]">
+          <span className="text-white font-bold text-xl">M</span>
+        </div>
+
+        <div className="flex flex-col leading-tight">
+          <h1 className="text-xl font-bold tracking-wide
+                         bg-gradient-to-r from-blue-400 to-cyan-400
+                         text-transparent bg-clip-text">
+            MunGPT
+          </h1>
+          <p className="text-xs text-slate-400">
+            Premium AI Assistant
+          </p>
+        </div>
+      </div>
 
       {/* New Chat */}
-      <button onClick={createNewChat}
-        className="
-        flex justify-center items-center w-full py-2 mt-10
-        text-white text-sm rounded-xl
-        bg-gradient-to-r from-purple-500 to-violet-700
-        shadow-[0_0_18px_rgba(168,85,247,0.45)]
-        hover:shadow-[0_0_28px_rgba(168,85,247,0.7)]
-        transition-all
-        "
+      <button
+        onClick={createNewChat}
+        className="flex justify-center items-center w-full py-2.5 mt-6
+        text-white text-base font-medium rounded-xl tracking-wide
+        bg-gradient-to-r from-blue-600 to-cyan-500
+        shadow-[0_0_25px_rgba(0,240,255,0.5)]
+        hover:shadow-[0_0_40px_rgba(0,240,255,0.8)]
+        hover:scale-[1.03]
+        active:scale-95
+        transition-all duration-300"
       >
         <span className="mr-2 text-xl">+</span> New Chat
       </button>
 
       {/* Search */}
       <div
-        className="
-        flex items-center gap-2 p-3 mt-4
-        border border-purple-400/25 rounded-xl
-        bg-purple-900/20
-        "
+        className="flex items-center gap-2 p-3 mt-5
+        bg-white/[0.04]
+        border border-white/10 rounded-xl
+        focus-within:border-cyan-400/40
+        focus-within:shadow-[0_0_20px_rgba(34,211,238,0.2)]
+        transition-all duration-300"
       >
-        <img src={assets.search_icon} className="w-4 invert opacity-80" alt="" />
+        <img src={assets.search_icon} className="w-4 invert opacity-60" alt="" />
         <input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search Conversations"
-          className="
-          text-xs bg-transparent outline-none w-full
-          placeholder:text-purple-300/60 text-purple-50
-          "
+          className="text-sm bg-transparent outline-none w-full
+          placeholder:text-slate-400 text-white tracking-wide"
         />
       </div>
 
       {chats.length > 0 && (
-        <p className="mt-4 text-sm text-purple-200/80">Recent Chats</p>
+        <p className="mt-5 text-base text-slate-400 tracking-wide">Recent Chats</p>
       )}
 
       {/* Chat list */}
-      <div className="flex-1 overflow-y-scroll mt-3 text-sm space-y-3">
+      <div className="flex-1 overflow-y-auto mt-3 space-y-3 pr-1">
         {chats
           .filter((chat) =>
             chat.messages[0]
@@ -100,30 +123,30 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
                 setSelectedChat(chat)
                 setIsMenuOpen(false)
               }}
-              className="
-              p-2 px-4 rounded-xl cursor-pointer flex justify-between group
-              bg-purple-900/15
-              border border-purple-400/15
-              hover:bg-purple-800/30
-              hover:border-purple-400/30
-              transition-all
-              "
+              className="p-3 rounded-xl cursor-pointer flex justify-between group
+              bg-white/[0.03]
+              border border-white/10
+              hover:bg-white/[0.07]
+              hover:border-cyan-400/40
+              hover:shadow-[0_0_25px_rgba(34,211,238,0.25)]
+              transition-all duration-300"
             >
               <div>
-                <p className="truncate w-full text-purple-50">
+                <p className="truncate w-full text-white tracking-wide">
                   {chat.messages.length > 0
                     ? chat.messages[0]?.content.slice(0, 32)
                     : chat.name}
                 </p>
-                <p className="text-xs text-purple-300/70">
+                <p className="text-xs text-slate-400 tracking-wide">
                   {moment(chat.updatedAt).fromNow()}
                 </p>
               </div>
 
               <img 
                 src={assets.bin_icon}
-                className="hidden group-hover:block w-4 cursor-pointer invert opacity-70"
-                alt="" onClick={e=> toast.promise(deleteChat(e, chat._id), {loading:'deleting...'})}
+                className="hidden group-hover:block w-4 cursor-pointer invert opacity-60"
+                alt=""
+                onClick={e=> toast.promise(deleteChat(e, chat._id), {loading:'Deleting...'})}
               />
             </div>
           ))}
@@ -135,16 +158,15 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
           navigate('/community')
           setIsMenuOpen(false)
         }}
-        className="
-        flex items-center gap-2 p-3 mt-4 rounded-xl cursor-pointer
-        border border-purple-400/20
-        hover:bg-purple-800/25
-        hover:scale-[1.03]
-        transition-all
-        "
+        className="flex items-center gap-2 p-3 mt-4 rounded-xl cursor-pointer
+        border border-white/10
+        bg-white/[0.04]
+        hover:bg-white/[0.08]
+        hover:shadow-[0_0_20px_rgba(34,211,238,0.2)]
+        transition-all duration-300"
       >
-        <img src={assets.gallery_icon} className="w-4.5 invert opacity-80" alt="" />
-        <p className="text-sm text-purple-50">Community Images</p>
+        <img src={assets.gallery_icon} className="w-4.5 invert opacity-70" alt="" />
+        <p className="text-base text-white tracking-wide">Community Images</p>
       </div>
 
       {/* Credits */}
@@ -153,18 +175,17 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
           navigate('/credits')
           setIsMenuOpen(false)
         }}
-        className="
-        flex items-center gap-2 p-3 mt-4 rounded-xl cursor-pointer
-        border border-purple-400/20
-        hover:bg-purple-800/25
-        hover:scale-[1.03]
-        transition-all
-        "
+        className="flex items-center gap-2 p-3 mt-4 rounded-xl cursor-pointer
+        border border-white/10
+        bg-white/[0.04]
+        hover:bg-white/[0.08]
+        hover:shadow-[0_0_20px_rgba(34,211,238,0.2)]
+        transition-all duration-300"
       >
-        <img src={assets.diamond_icon} className="w-4.5 invert opacity-80" alt="" />
-        <div className="flex flex-col text-sm">
-          <p className="text-purple-50">Credits : {user?.credits}</p>
-          <p className="text-xs text-purple-300/70">
+        <img src={assets.diamond_icon} className="w-4.5 invert opacity-70" alt="" />
+        <div className="flex flex-col text-base tracking-wide">
+          <p className="text-white">Credits : {user?.credits}</p>
+          <p className="text-xs text-slate-400 tracking-wide">
             Purchase credits to use MunGPT
           </p>
         </div>
@@ -172,13 +193,12 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
 
       {/* Theme Toggle */}
       <div
-        className="
-        flex items-center justify-between gap-2 p-3 mt-4 rounded-xl
-        border border-purple-400/20
-        "
+        className="flex items-center justify-between gap-2 p-3 mt-4 rounded-xl
+        border border-white/10
+        bg-white/[0.04]"
       >
-        <div className="flex items-center gap-2 text-sm text-purple-50">
-          <img src={assets.theme_icon} className="w-4 invert opacity-80" alt="" />
+        <div className="flex items-center gap-2 text-base text-white tracking-wide">
+          <img src={assets.theme_icon} className="w-4 invert opacity-70" alt="" />
           <p>Dark Mode</p>
         </div>
 
@@ -189,32 +209,32 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
             className="sr-only peer"
             checked={theme === 'dark'}
           />
-          <div className="w-9 h-5 bg-gray-600 rounded-full peer-checked:bg-purple-600 transition-all"></div>
+          <div className="w-9 h-5 bg-slate-600 rounded-full peer-checked:bg-cyan-500 transition-all"></div>
           <span className="absolute left-1 top-1 w-3 h-3 bg-white rounded-full transition-transform peer-checked:translate-x-4"></span>
         </label>
       </div>
 
       {/* User */}
       <div
-        className="
-        flex items-center gap-2 p-3 mt-4 rounded-xl cursor-pointer group
-        border border-purple-400/20
-        hover:bg-purple-800/25
-        transition-all
-        "
+        className="flex items-center gap-2 p-3 mt-4 rounded-xl cursor-pointer group
+        border border-white/10
+        bg-white/[0.04]
+        hover:bg-white/[0.08]
+        transition-all"
       >
         <img
           src={assets.user_icon}
-          className="w-7 h-7 rounded-full ring-2 ring-purple-400/40"
+          className="w-7 h-7 rounded-full ring-2 ring-cyan-400/40"
           alt=""
         />
-        <p className="flex-1 text-sm text-purple-50 truncate">
+        <p className="flex-1 text-base text-white truncate tracking-wide">
           {user ? user.name : 'Login your account'}
         </p>
         {user && (
-          <img onClick={logout}
+          <img
+            onClick={logout}
             src={assets.logout_icon}
-            className="h-5 cursor-pointer hidden invert opacity-70 group-hover:block"
+            className="h-5 cursor-pointer hidden invert opacity-60 group-hover:block"
           />
         )}
       </div>
@@ -223,7 +243,7 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
       <img
         onClick={() => setIsMenuOpen(false)}
         src={assets.close_icon}
-        className="absolute top-3 right-3 w-5 h-5 cursor-pointer md:hidden invert opacity-80"
+        className="absolute top-3 right-3 w-5 h-5 cursor-pointer md:hidden invert opacity-70"
         alt=""
       />
     </div>

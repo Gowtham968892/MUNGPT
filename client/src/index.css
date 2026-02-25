@@ -1,52 +1,61 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Poppins:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 @import "tailwindcss";
+
+/* ---------- PREVENT WHITE FLASH ---------- */
+html, body, #root {
+  background-color: #030712;
+}
 
 /* ---------- GLOBAL FONT ---------- */
 * {
   font-family: "Outfit", sans-serif;
 }
 
-/* ---------- PREMIUM COLOR TOKENS (PURPLE LUXURY) ---------- */
-@theme {
-  --color-primary: #a855f7;
-  --color-primary-soft: #9333ea;
-
-  --bg-main: #0b0614;
-  --bg-card: #120a22;
-
-  --border-soft: rgba(168, 85, 247, 0.25);
-  --accent-glow: rgba(192, 132, 252, 0.6);
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-/* ---------- ROOT THEME ---------- */
+/* ---------- PREMIUM AI COLOR TOKENS ---------- */
+@theme {
+  --color-primary: #2563eb;
+  --color-accent: #00f0ff;
+
+  --bg-main: #030712;
+  --bg-card: #0b1220;
+
+  --border-soft: rgba(255,255,255,0.06);
+  --accent-glow: rgba(0,240,255,0.35);
+}
+
 :root {
-  --text-main: #f3e8ff;
-  --text-muted: #a78bfa;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
 }
 
 /* ---------- BODY ---------- */
 body {
+  font-size: 16px;
+  line-height: 1.7;
+
   background:
-    radial-gradient(900px 500px at 50% -20%, rgba(255,255,255,0.06), transparent 45%),
-    linear-gradient(
-      180deg,
-      #0f0a1a 0%,
-      #0b0614 35%,
-      #05020a 100%
-    );
-  color: #e9d5ff;
+    radial-gradient(900px 500px at 50% -20%, rgba(0,240,255,0.08), transparent 50%),
+    linear-gradient(180deg, #030712 0%, #050a18 50%, #030712 100%);
+
+  color: var(--text-main);
   min-height: 100vh;
 }
 
-/* ---------- SCROLLBAR (Premium Purple) ---------- */
+/* ---------- SCROLLBAR ---------- */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0b0614;
+  background: #030712;
 }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #c084fc, #9333ea);
+  background: linear-gradient(180deg, #1e293b, #0f172a);
   border-radius: 10px;
 }
 
@@ -57,23 +66,42 @@ body {
 
 /* ---------- CODE BLOCK ---------- */
 .reset-tw pre {
-  background: rgba(18, 10, 34, 0.85);
-  border: 1px solid var(--border-soft);
-  border-radius: 12px;
-  padding: 0.75rem;
+  background: #0f172a;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 1rem;
+  font-size: 14.5px;
+  line-height: 1.6;
 }
 
 .reset-tw code {
-  color: #e9d5ff;
+  color: #e2e8f0;
 }
 
 /* ---------- GLASS EFFECT ---------- */
 .glass {
-  background: rgba(18, 10, 34, 0.6);
-  backdrop-filter: blur(14px);
-  border: 1px solid var(--border-soft);
-  box-shadow: 0 10px 30px rgba(168, 85, 247, 0.15);
-  border-radius: 16px;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow:
+    0 10px 40px rgba(0,0,0,0.7),
+    0 0 40px rgba(0,240,255,0.08);
+  border-radius: 20px;
+}
+
+/* ---------- CHAT TEXT ---------- */
+.chat-text {
+  font-size: 16.5px;
+  line-height: 1.85;
+  letter-spacing: 0.3px;
+  font-weight: 400;
+}
+
+/* ---------- SIDEBAR TEXT ---------- */
+.sidebar-text {
+  font-size: 15px;
+  line-height: 1.65;
+  letter-spacing: 0.25px;
 }
 
 /* ---------- LOADER ---------- */
@@ -91,23 +119,28 @@ button {
 
 button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 35px rgba(168, 85, 247, 0.35);
+  box-shadow:
+    0 10px 40px rgba(0,0,0,0.6),
+    0 0 25px rgba(0,240,255,0.35);
 }
 
-/* ---------- CHAT INPUT (FORM) ---------- */
+/* ---------- CHAT INPUT ---------- */
 form {
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border: 1px solid rgba(255,255,255,0.06);
   box-shadow:
-    0 8px 30px rgba(168, 85, 247, 0.25),
-    inset 0 0 0 1px rgba(192, 132, 252, 0.25);
+    0 10px 40px rgba(0,0,0,0.7),
+    0 0 30px rgba(0,240,255,0.08);
   transition: all 0.3s ease;
+  border-radius: 9999px;
 }
 
 form:focus-within {
+  border: 1px solid rgba(0,240,255,0.5);
   box-shadow:
-    0 12px 40px rgba(168, 85, 247, 0.45),
-    inset 0 0 0 1px rgba(216, 180, 254, 0.6);
+    0 15px 50px rgba(0,0,0,0.8),
+    0 0 35px rgba(0,240,255,0.4);
 }
 
 /* ---------- INPUT CLEANUP ---------- */
@@ -118,25 +151,106 @@ form select {
   outline: none !important;
   box-shadow: none !important;
   color: var(--text-main);
+  font-size: 16px;
 }
 
 form input {
-  padding: 0.6rem 0.8rem;
-  border-radius: 9999px;
+  padding: 0.75rem 1rem;
 }
 
 form input::placeholder {
-  color: #c4b5fd;
-  opacity: 0.85;
+  color: var(--text-muted);
+  opacity: 0.8;
   font-weight: 400;
 }
 
 /* ---------- SEND ICON ---------- */
 form button img {
-  filter: drop-shadow(0 0 6px rgba(192, 132, 252, 0.6));
-  transition: transform 0.2s ease;
+  filter: drop-shadow(0 0 10px rgba(0,240,255,0.4));
+  transition: transform 0.25s ease;
 }
 
 form button:hover img {
-  transform: scale(1.1);
+  transform: scale(1.12);
+}
+/* ============================= */
+/* 🚀 PREMIUM MESSAGE ANIMATION  */
+/* ============================= */
+
+/* USER MESSAGE - slide from right */
+@keyframes messageUserIn {
+  0% {
+    opacity: 0;
+    transform: translateX(60px) scale(0.92);
+    filter: blur(4px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(-4px) scale(1.02);
+    filter: blur(0px);
+  }
+  100% {
+    transform: translateX(0px) scale(1);
+  }
+}
+
+.animate-user {
+  animation: messageUserIn 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+
+/* AI MESSAGE - slide from left */
+@keyframes messageAIIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-60px) scale(0.92);
+    filter: blur(4px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(4px) scale(1.02);
+    filter: blur(0px);
+  }
+  100% {
+    transform: translateX(0px) scale(1);
+  }
+}
+
+.animate-ai {
+  animation: messageAIIn 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+
+/* ✨ Subtle Glow Pulse when AI appears */
+@keyframes aiGlow {
+  0% {
+    box-shadow: 0 0 0px rgba(0,240,255,0);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(0,240,255,0.25);
+  }
+  100% {
+    box-shadow: 0 0 0px rgba(0,240,255,0);
+  }
+}
+
+.ai-glow {
+  animation: aiGlow 1.2s ease-out;
+}
+
+
+/* 🌊 Smooth Typing Indicator */
+@keyframes smoothTyping {
+  0%, 80%, 100% {
+    transform: scale(0.6);
+    opacity: 0.3;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-typing {
+  animation: smoothTyping 1.4s infinite ease-in-out;
 }
