@@ -3,6 +3,7 @@ import { useAppContext } from '../context/AppContext'
 import { assets } from '../assets/assets'
 import Message from './Message'
 import toast from 'react-hot-toast'
+import "highlight.js/styles/github-dark.css";
 
 const ChatBox = () => {
 
@@ -18,7 +19,7 @@ const ChatBox = () => {
   const onSubmit = async (e) => {
     try {
       e.preventDefault()
-      if(!user) return toast('Login to send message')
+      if (!user) return toast('Login to send message')
 
       setLoading(true)
       const promptcopy = prompt
@@ -26,22 +27,22 @@ const ChatBox = () => {
 
       setMessages(prev => [
         ...prev,
-        { role: 'user', content: prompt, timestamp: Date.now(), isImage: false }
+        { role: 'user', content: promptcopy, timestamp: Date.now(), isImage: false }
       ])
 
       const { data } = await axios.post(
         `/api/message/${mode}`,
-        { chatId: selectedChat._id, prompt, isPublished },
-        { headers: { 'Authorization': `Bearer ${token}` } }
+        { chatId: selectedChat._id, prompt: promptcopy, isPublished },
+        { headers: { Authorization: `Bearer ${token}` } }
       )
 
-      if(data.success){
+      if (data.success) {
         setMessages(prev => [...prev, data.reply])
 
-        if (mode === 'image'){
-          setUser(prev => ({...prev, credits: prev.credits - 2}))
+        if (mode === 'image') {
+          setUser(prev => ({ ...prev, credits: prev.credits - 2 }))
         } else {
-          setUser(prev => ({...prev, credits: prev.credits - 1}))
+          setUser(prev => ({ ...prev, credits: prev.credits - 1 }))
         }
       } else {
         toast.error(data.message)
@@ -51,7 +52,6 @@ const ChatBox = () => {
     } catch (error) {
       toast.error(error.message)
     } finally {
-      setPrompt('')
       setLoading(false)
     }
   }
@@ -94,7 +94,6 @@ const ChatBox = () => {
           </div>
         ))}
 
-        {/* PREMIUM TYPING LOADER */}
         {loading && (
           <div className="flex items-center gap-3 mt-6 pl-3 animate-fadeInUp">
             <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-typing"></div>
@@ -118,10 +117,10 @@ const ChatBox = () => {
         </label>
       )}
 
-      {/* Floating Glass Input */}
+      {/* Input Section */}
       <form
         onSubmit={onSubmit}
-        className="relative bg-white/[0.05] backdrop-blur-2xl border border-white/10 rounded-2xl shadow-[0_8px_40px_rgba(0,0,0,0.6)] w-full max-w-3xl px-5 py-3 mx-auto flex gap-4 items-center transition-all duration-300 focus-within:border-cyan-400/40 focus-within:shadow-[0_0_40px_rgba(34,211,238,0.25)]"
+        className="relative bg-white/[0.05] backdrop-blur-2xl border border-white/10 rounded-2xl shadow-[0_8px_40px_rgba(0,0,0,0.6)] w-full max-w-3xl px-5 py-3 mx-auto flex gap-4 items-end transition-all duration-300 focus-within:border-cyan-400/40 focus-within:shadow-[0_0_40px_rgba(34,211,238,0.25)]"
       >
 
         <select
@@ -133,18 +132,23 @@ const ChatBox = () => {
           <option className="bg-black" value="image">Image</option>
         </select>
 
-        <input
+        {/* 🔥 FIXED MULTILINE TEXTAREA */}
+        <textarea
           onChange={(e) => setPrompt(e.target.value)}
           value={prompt}
-          type="text"
           placeholder="Ask MunGPT anything..."
-          className="flex-1 w-full text-base outline-none bg-transparent text-white placeholder:text-gray-400 tracking-wide"
+          className="flex-1 w-full text-base outline-none bg-transparent text-white placeholder:text-gray-400 tracking-wide resize-none overflow-hidden"
+          rows={1}
           required
+          onInput={(e) => {
+            e.target.style.height = "auto"
+            e.target.style.height = e.target.scrollHeight + "px"
+          }}
         />
 
         <button
           disabled={loading}
-          className="p-2 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-500 hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all duration-300"
+          className="cursor-pointer p-2 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-500 hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all duration-300"
         >
           <img
             src={loading ? assets.stop_icon : assets.send_icon}

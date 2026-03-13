@@ -3,6 +3,14 @@ import { assets } from '../assets/assets'
 import moment from 'moment'
 import Markdown from 'react-markdown'
 import Prism from 'prismjs'
+import "highlight.js/styles/github-dark.css";
+
+import "prismjs/themes/prism-tomorrow.css"
+import "prismjs/components/prism-javascript"
+import "prismjs/components/prism-python"
+import "prismjs/components/prism-jsx"
+import "prismjs/components/prism-css"
+import "prismjs/components/prism-markup"
 
 const Message = ({ message }) => {
 
@@ -24,7 +32,7 @@ const Message = ({ message }) => {
             transition-all duration-300 hover:scale-[1.02]
             "
           >
-            <p className="text-[15.5px] text-white leading-7 tracking-wide">
+            <p className="text-[15.5px] text-white leading-7 tracking-wide whitespace-pre-wrap">
               {message.content}
             </p>
             <span className="text-[11px] text-white/70 tracking-wide">
@@ -66,7 +74,26 @@ const Message = ({ message }) => {
               />
             ) : (
               <div className="text-[15.5px] text-white reset-tw leading-8 tracking-wide">
-                <Markdown>{message.content}</Markdown>
+                <Markdown
+                  components={{
+                    code({ inline, className, children, ...props }) {
+                      const match = /language-(\w+)/.exec(className || "")
+                      return !inline && match ? (
+                        <pre className="rounded-xl overflow-auto text-sm my-3">
+                          <code className={className} {...props}>
+                            {children}
+                          </code>
+                        </pre>
+                      ) : (
+                        <code className="bg-slate-800 px-1 py-0.5 rounded text-cyan-400">
+                          {children}
+                        </code>
+                      )
+                    }
+                  }}
+                >
+                  {message.content}
+                </Markdown>
               </div>
             )}
 

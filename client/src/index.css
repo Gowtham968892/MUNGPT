@@ -38,11 +38,9 @@ html {
 body {
   font-size: 16px;
   line-height: 1.7;
-
   background:
     radial-gradient(900px 500px at 50% -20%, rgba(0,240,255,0.08), transparent 50%),
     linear-gradient(180deg, #030712 0%, #050a18 50%, #030712 100%);
-
   color: var(--text-main);
   min-height: 100vh;
 }
@@ -64,18 +62,30 @@ body {
   all: revert;
 }
 
-/* ---------- CODE BLOCK ---------- */
+/* ================================================= */
+/* ✅ FIXED: PURE BLACK CODE BLOCK (ChatGPT Style) */
+/* ================================================= */
+
 .reset-tw pre {
-  background: #0f172a;
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 16px;
-  padding: 1rem;
+  background: #0d1117 !important;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 1.2rem;
   font-size: 14.5px;
-  line-height: 1.6;
+  line-height: 1.7;
+  overflow-x: auto;
 }
 
 .reset-tw code {
-  color: #e2e8f0;
+  background: transparent !important;
+  color: #e6edf3 !important;
+  font-family: "Fira Code", monospace;
+}
+
+/* 🔥 Highlight.js override (if used) */
+.hljs {
+  background: #0d1117 !important;
+  color: #e6edf3 !important;
 }
 
 /* ---------- GLASS EFFECT ---------- */
@@ -124,8 +134,11 @@ button:hover {
     0 0 25px rgba(0,240,255,0.35);
 }
 
-/* ---------- CHAT INPUT ---------- */
-form {
+/* ================================================= */
+/* ✅ CHAT FORM ONLY (NOT GLOBAL FORM) */
+/* ================================================= */
+
+.chat-form {
   backdrop-filter: blur(22px);
   -webkit-backdrop-filter: blur(22px);
   border: 1px solid rgba(255,255,255,0.06);
@@ -136,16 +149,16 @@ form {
   border-radius: 9999px;
 }
 
-form:focus-within {
+.chat-form:focus-within {
   border: 1px solid rgba(0,240,255,0.5);
   box-shadow:
     0 15px 50px rgba(0,0,0,0.8),
     0 0 35px rgba(0,240,255,0.4);
 }
 
-/* ---------- INPUT CLEANUP ---------- */
-form input,
-form select {
+/* ---------- INPUT CLEANUP ONLY FOR CHAT ---------- */
+.chat-form input,
+.chat-form select {
   background: transparent !important;
   border: none !important;
   outline: none !important;
@@ -154,103 +167,74 @@ form select {
   font-size: 16px;
 }
 
-form input {
+.chat-form input {
   padding: 0.75rem 1rem;
 }
 
-form input::placeholder {
+.chat-form input::placeholder {
   color: var(--text-muted);
   opacity: 0.8;
   font-weight: 400;
 }
 
 /* ---------- SEND ICON ---------- */
-form button img {
+.chat-form button img {
   filter: drop-shadow(0 0 10px rgba(0,240,255,0.4));
   transition: transform 0.25s ease;
 }
 
-form button:hover img {
+.chat-form button:hover img {
   transform: scale(1.12);
 }
+
 /* ============================= */
-/* 🚀 PREMIUM MESSAGE ANIMATION  */
+/* 🚀 MESSAGE ANIMATION  */
 /* ============================= */
 
-/* USER MESSAGE - slide from right */
 @keyframes messageUserIn {
-  0% {
-    opacity: 0;
-    transform: translateX(60px) scale(0.92);
-    filter: blur(4px);
-  }
-  60% {
-    opacity: 1;
-    transform: translateX(-4px) scale(1.02);
-    filter: blur(0px);
-  }
-  100% {
-    transform: translateX(0px) scale(1);
-  }
+  0% { opacity: 0; transform: translateX(60px) scale(0.92); filter: blur(4px); }
+  60% { opacity: 1; transform: translateX(-4px) scale(1.02); filter: blur(0px); }
+  100% { transform: translateX(0px) scale(1); }
 }
 
 .animate-user {
   animation: messageUserIn 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-
-/* AI MESSAGE - slide from left */
 @keyframes messageAIIn {
-  0% {
-    opacity: 0;
-    transform: translateX(-60px) scale(0.92);
-    filter: blur(4px);
-  }
-  60% {
-    opacity: 1;
-    transform: translateX(4px) scale(1.02);
-    filter: blur(0px);
-  }
-  100% {
-    transform: translateX(0px) scale(1);
-  }
+  0% { opacity: 0; transform: translateX(-60px) scale(0.92); filter: blur(4px); }
+  60% { opacity: 1; transform: translateX(4px) scale(1.02); filter: blur(0px); }
+  100% { transform: translateX(0px) scale(1); }
 }
 
 .animate-ai {
   animation: messageAIIn 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-
-/* ✨ Subtle Glow Pulse when AI appears */
 @keyframes aiGlow {
-  0% {
-    box-shadow: 0 0 0px rgba(0,240,255,0);
-  }
-  50% {
-    box-shadow: 0 0 30px rgba(0,240,255,0.25);
-  }
-  100% {
-    box-shadow: 0 0 0px rgba(0,240,255,0);
-  }
+  0% { box-shadow: 0 0 0px rgba(0,240,255,0); }
+  50% { box-shadow: 0 0 30px rgba(0,240,255,0.25); }
+  100% { box-shadow: 0 0 0px rgba(0,240,255,0); }
 }
 
 .ai-glow {
   animation: aiGlow 1.2s ease-out;
 }
 
-
-/* 🌊 Smooth Typing Indicator */
 @keyframes smoothTyping {
-  0%, 80%, 100% {
-    transform: scale(0.6);
-    opacity: 0.3;
-  }
-  40% {
-    transform: scale(1);
-    opacity: 1;
-  }
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.3; }
+  40% { transform: scale(1); opacity: 1; }
 }
 
 .animate-typing {
   animation: smoothTyping 1.4s infinite ease-in-out;
 }
+.hljs-keyword { color: #ff7b72; }     
+.hljs-title { color: #d2a8ff; }       
+.hljs-string { color: #a5d6ff; }       
+.hljs-number { color: #79c0ff; }
+.hljs-comment { color: #8b949e; font-style: italic; }
+.hljs-built_in { color: #ffa657; }     
+.hljs-params { color: #e6edf3; }
+.hljs-attr { color: #79c0ff; }
+.hljs-variable { color: #ffa657; }
