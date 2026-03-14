@@ -3,14 +3,20 @@ import { assets } from '../assets/assets'
 import moment from 'moment'
 import Markdown from 'react-markdown'
 import Prism from 'prismjs'
-import "highlight.js/styles/github-dark.css";
+import toast from "react-hot-toast"
 
+import "highlight.js/styles/github-dark.css";
 import "prismjs/themes/prism-tomorrow.css"
 import "prismjs/components/prism-javascript"
 import "prismjs/components/prism-python"
 import "prismjs/components/prism-jsx"
 import "prismjs/components/prism-css"
 import "prismjs/components/prism-markup"
+
+const copyCode = (code) => {
+  navigator.clipboard.writeText(code)
+  toast.success("Code copied!")
+}
 
 const Message = ({ message }) => {
 
@@ -79,11 +85,20 @@ const Message = ({ message }) => {
                     code({ inline, className, children, ...props }) {
                       const match = /language-(\w+)/.exec(className || "")
                       return !inline && match ? (
-                        <pre className="rounded-xl overflow-auto text-sm my-3">
-                          <code className={className} {...props}>
-                            {children}
-                          </code>
-                        </pre>
+                        <div className="relative my-3">
+                          <button
+                            onClick={() => copyCode(String(children))}
+                            className="absolute top-2 right-2 text-xs bg-slate-700 hover:bg-cyan-500 px-2 py-1 rounded text-white transition"
+                          >
+                            Copy
+                          </button>
+
+                          <pre className="rounded-xl overflow-auto text-sm">
+                            <code className={className} {...props}>
+                              {children}
+                            </code>
+                          </pre>
+                        </div>
                       ) : (
                         <code className="bg-slate-800 px-1 py-0.5 rounded text-cyan-400">
                           {children}

@@ -5,6 +5,7 @@ import Message from './Message'
 import toast from 'react-hot-toast'
 import "highlight.js/styles/github-dark.css";
 
+
 const ChatBox = () => {
 
   const containerRef = useRef(null)
@@ -63,13 +64,12 @@ const ChatBox = () => {
   }, [selectedChat])
 
   useEffect(() => {
-    if (containerRef.current) {
-      containerRef.current.scrollTo({
-        top: containerRef.current.scrollHeight,
-        behavior: 'smooth',
-      })
-    }
-  }, [messages])
+  if (containerRef.current) {
+    setTimeout(() => {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight
+    }, 100)
+  }
+}, [messages])
 
   return (
     <div className="flex-1 flex flex-col justify-between m-5 md:m-10 xl:mx-30 max-md:mt-14 2xl:pr-40">
@@ -77,7 +77,7 @@ const ChatBox = () => {
       {/* Messages Container */}
       <div
         ref={containerRef}
-        className="flex-1 mb-6 overflow-y-auto text-[16.5px] leading-7 tracking-wide pr-2 custom-scrollbar"
+        className="flex-1 mb-6 overflow-y-auto overflow-x-hidden text-[16.5px] leading-7 tracking-wide pr-2 custom-scrollbar"
       >
 
         {messages.length === 0 && (
