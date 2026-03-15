@@ -61,8 +61,13 @@ export const textMessageController = async (req, res) => {
     res.json({ success: true, reply });
 
   } catch (error) {
-    console.error("Text Message Error:", error);
-    res.status(500).json({ success: false, message: error.message });
+    console.error("Text Message Error:", error?.response?.data || error);
+    const message =
+      error?.response?.data?.error?.message ||
+      error?.response?.data ||
+      error?.message ||
+      "Internal server error";
+    res.status(500).json({ success: false, message });
   }
 };
 
@@ -132,7 +137,12 @@ export const imageMessageController = async (req, res) => {
     res.json({ success: true, reply });
 
   } catch (error) {
-    console.error("Image Message Error:", error);
-    res.status(500).json({ success: false, message: error.message });
+    console.error("Image Message Error:", error?.response?.data || error);
+    const message =
+      error?.response?.data?.error?.message ||
+      error?.response?.data ||
+      error?.message ||
+      "Internal server error";
+    res.status(500).json({ success: false, message });
   }
 };

@@ -1,4 +1,7 @@
 import dotenv from 'dotenv';
+dotenv.config();
+import dns from 'dns';
+dns.setServers(['8.8.8.8', '8.8.4.4']);
 import express from 'express';
 import cors from 'cors'
 import connectDB from './configs/db.js'
@@ -13,7 +16,7 @@ const app = express()
 
 await connectDB()
 
-app.post('/api/stripe', express.raw({type: 'application/json'}), stripeWebhooks)
+app.post('/api/stripe', express.raw({ type: 'application/json' }), stripeWebhooks)
 
 
 
@@ -21,7 +24,7 @@ app.use(cors())
 app.use(express.json())
 
 
-app.get('/', (req, res)=> res.send('Server is Live!'))
+app.get('/', (req, res) => res.send('Server is Live!'))
 app.use('/api/user', userRouter)
 app.use('/api/chat', chatRouter)
 app.use('/api/message', messageRouter)
@@ -29,6 +32,6 @@ app.use('/api/credit', creditRouter)
 
 const PORT = process.env.PORT || 3000
 
-app.listen(PORT, ()=>{
+app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`)
 }) 

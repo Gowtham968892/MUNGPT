@@ -64,12 +64,18 @@ const ChatBox = () => {
   }, [selectedChat])
 
   useEffect(() => {
-  if (containerRef.current) {
-    setTimeout(() => {
-      containerRef.current.scrollTop = containerRef.current.scrollHeight
-    }, 100)
+  const container = containerRef.current;
+  if (!container) return;
+
+  const lastMessage = container.lastElementChild;
+
+  if (lastMessage) {
+    lastMessage.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
   }
-}, [messages])
+}, [messages]);
 
   return (
     <div className="flex-1 flex flex-col justify-between m-5 md:m-10 xl:mx-30 max-md:mt-14 2xl:pr-40">
